@@ -6,6 +6,17 @@ type MoreInfoProps = {
   toolTipText?: string;
 };
 
+/**
+ * MoreInfo
+ *
+ * Adds an `ⓘ` icon with customizable tooltip text.
+ *
+ * @component
+ * @param {MoreInfoProps} props - The props object
+ * @param {string} className - Optional classes for TailwindCSS styling
+ * @param {string} toolTipText - Optional text content to include on-hover of this component.
+ * @returns
+ */
 function MoreInfo({ className, toolTipText }: MoreInfoProps) {
   return (
     <div className={`group ${className}`}>
@@ -16,7 +27,7 @@ function MoreInfo({ className, toolTipText }: MoreInfoProps) {
       </div>
 
       {toolTipText && (
-        <div className="absolute opacity-0 top-[50%] left-[120%] mb-2 hidden w-[1500%] group-hover:block group-hover:opacity-100 bg-gray-600 text-sm px-2 py-1 rounded-xl transition-opacity duration-400">
+        <div className="w-[1400%] mt-2 text-sm px-3 py-2 rounded-lg bg-gray-700 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           <ReactMarkdown>{toolTipText}</ReactMarkdown>
         </div>
       )}

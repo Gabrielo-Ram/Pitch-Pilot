@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import MoreInfo from "./MoreInfo";
 
 type NavBarProps = {
-  showToolTip: boolean;
-  toolTipText: string;
+  showToolTip?: boolean;
+  toolTipText?: string;
 };
 
 /**
