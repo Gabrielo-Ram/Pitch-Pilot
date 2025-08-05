@@ -26,14 +26,15 @@ export async function uploadFile(
 
   try {
     const pdfArrayBuffer = await file.arrayBuffer();
+    const blob = new Blob([pdfArrayBuffer], { type: "application/pdf " });
 
     //Send the PDF file to the API endpoint
-    const res = await fetch(`${BACKEND_URL}/processPDF`, {
+    const res = await fetch(`${BACKEND_URL}/mcp/processPDF`, {
       method: "POST",
-      body: pdfArrayBuffer,
       headers: {
         "Content-Type": "application/pdf",
       },
+      body: blob,
     });
 
     if (!res.ok) {

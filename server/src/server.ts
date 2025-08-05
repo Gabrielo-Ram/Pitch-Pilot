@@ -38,7 +38,6 @@ const app = express();
 app.use(
   cors({
     origin: frontendURL,
-    credentials: true,
   })
 );
 
@@ -59,11 +58,20 @@ export let mcpClient: MCPClient | null = null;
 const mcpRouter = express.Router();
 app.use("/mcp", mcpRouter);
 
+let isMCPInitalizing = false;
 mcpRouter.post("/", async (req, res, next) => {
   try {
     if (mcpClient) {
       return res.json({ message: "MCP already initialized." });
     }
+
+    if (isMCPInitalizing) {
+      return res
+        .status(202)
+        .json({ message: "MCP is currently initializing... " });
+    }
+
+    isMCPInitalizing = true;
 
     //Starts and connects the MCP Client and MCP Server
     mcpClient = await engageMCPEcosystem();
@@ -86,10 +94,16 @@ mcpRouter.post("/", async (req, res, next) => {
     mcpRouter.use("/sendContext", sendContextRouter);
 
     console.error("✓ Succesfully engaged MCP Ecosystem");
-    res.status(200).json({ message: "MCP initialized and routes mounted." });
+    isMCPInitalizing = false;
+
+    return res
+      .status(200)
+      .json({ message: "MCP initialized and routes mounted." });
   } catch (err) {
     console.error("❌ Error initializing MCP:", err);
-    res.status(500).json({ error: "Failed to initialize MCP ecosystem." });
+    return res
+      .status(500)
+      .json({ error: "Failed to initialize MCP ecosystem." });
   }
 });
 

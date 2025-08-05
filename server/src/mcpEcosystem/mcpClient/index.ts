@@ -98,13 +98,15 @@ export class MCPClient {
         },
       });
 
+      //Silences a Gemini SDK warning
+      const { text } = response;
       //Saves Gemini's response to the query in a buffer
-      const reply = response?.text ?? "";
+      const reply = text ?? "";
 
       //Validate the model's response
       if (typeof reply !== "string" || reply.trim() == "") {
         console.error(
-          `\nSorry, the LLM returned an empty or invalid reply. Please try again.\n${response.text}`
+          `\nSorry, the LLM returned an empty or invalid reply. Please try again.\n`
         );
         //If LLM response invalid, remove user query that caused error from message history and return.
         this.messages.pop();

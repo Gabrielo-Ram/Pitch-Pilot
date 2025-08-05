@@ -22,10 +22,16 @@ function ConnectingPage() {
   const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  const navigateHome = () => {
+    navigate("/");
+  };
+
   //If the server starts successfully, navigate to the next page
-  if (isSuccessful) {
-    navigate("/chat");
-  }
+  useEffect(() => {
+    if (isSuccessful) {
+      navigate("/chat");
+    }
+  }, [isSuccessful]);
 
   //Call API endpoint to initiate the MCP Ecosystem
   useEffect(() => {
@@ -92,6 +98,12 @@ function ConnectingPage() {
             </a>{" "}
             a message.
           </p>
+          <div
+            className="outline-1 w-[35%] text-center my-[4%] py-2 px-3 rounded-xl bg-gray-600 hover:cursor-pointer hover:outline-3 hover:bg-blue-900 hover:rounded-lg transition-all duration-200"
+            onClick={navigateHome}
+          >
+            <p>Navigate home</p>
+          </div>
         </div>
       )}
     </div>

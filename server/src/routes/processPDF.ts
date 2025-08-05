@@ -9,7 +9,7 @@
 import express from "express";
 import { mcpClient } from "../server.js";
 //@ts-ignore
-import pdf from "pdf-parse";
+import pdfParse from "pdf-parse/lib/pdf-parse.js";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import path from "path";
@@ -50,18 +50,21 @@ router.post("/", async (req: any, res: any) => {
     }
 
     //Extract text from PDF
-    const data = await pdf(pdfBuffer);
-    const extractedText = data.text;
+    const data = await pdfParse(pdfBuffer);
+    const extractedText = data.text as string;
 
     //Send PDF as starting context to the LLM
-    const sendToMCP = await fetch(`${BACKEND_URL}/mcp/sendContext`, {
+    const sendToMCP = await fetch(`${BACKEND_URL}/mcp/processQuery`, {
       method: "POST",
-      headers: { "Content-Type": "application/pdf" },
-      body: extractedText,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: extractedText }),
     });
 
     if (!sendToMCP.ok) {
-      console.error("❌ Failed to send parsed PDF to MCP");
+      const errorMessage = await sendToMCP.json();
+      console.error(
+        `❌ Failed to send parsed PDF to MCP\n ${errorMessage.error}`
+      );
       return res
         .status(400)
         .json({ error: "❌ Failed to send parsed PDF to MCP " });
@@ -71,9 +74,9 @@ router.post("/", async (req: any, res: any) => {
       message: "Successfully parsed and sent PDF file to MCP",
     });
   } catch (error) {
-    console.error("Error processing PDF to LLM: ", error);
+    console.error("❌ Error processing PDF to LLM: ", error);
     res.status(500).json({
-      error: "Failed to process PDF to LLM",
+      error: "Failed to process PDF",
     });
   }
 });
