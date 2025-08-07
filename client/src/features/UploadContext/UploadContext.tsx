@@ -1,10 +1,10 @@
 import { GoPlus } from "react-icons/go";
 import { uploadFile } from "./fileUpload";
-import { useState } from "react";
-import { VscLoading } from "react-icons/vsc";
 
 type UploadContextProps = {
-  setIsUploaded: (isUploaded: boolean) => void;
+  className?: string;
+  setIsLoading: any;
+  setMessages: any;
 };
 
 /**
@@ -18,39 +18,46 @@ type UploadContextProps = {
  *
  * @param {(setIsUploaded: boolean) => void} props.setIsUploaded - Callback useState function to update the parent when upload is complete
  */
-function UploadContext({ setIsUploaded }: UploadContextProps) {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
+function UploadContext({
+  className,
+  setIsLoading,
+  setMessages,
+}: UploadContextProps) {
   //Sends the state up to the parent element when file is successfully uploaded
   const handleUpload = async (e: any) => {
     setIsLoading(true);
-    const successfulUpload = await uploadFile(e);
-    if (successfulUpload) setIsUploaded(true);
+    const response = await uploadFile(e);
+
+    setMessages((prevMessages: any) => [
+      ...prevMessages,
+      {
+        role: "user",
+        reply: "[ File Uploaded ]",
+      },
+      {
+        role: "model",
+        reply: response,
+      },
+    ]);
     setIsLoading(false);
   };
 
   return (
-    <div className="absolute w-screen h-screen flex flex-col justify-center items-center bg-gray-600/70 z-2">
-      {isLoading ? (
-        <label className="size-20 flex justify-center items-center overflow-clip duration-300">
-          <VscLoading className="size-[120%] animate-spin" />
-        </label>
-      ) : (
-        <label
-          htmlFor="uploadFileInput"
-          className="size-20 outline-2 rounded-xl bg-gray-300/20 hover:cursor-pointer flex justify-center items-center overflow-clip hover:bg-gray-200/40 hover:outline-4 transition-all duration-300"
-        >
-          <input
-            id="uploadFileInput"
-            type="file"
-            accept=".pdf"
-            onChange={(e) => handleUpload(e)}
-            className="hidden"
-          />
+    <div className={`flex flex-col justify-center items-center ${className}`}>
+      <label
+        htmlFor="uploadFileInput"
+        className="rounded-md h-full hover:cursor-pointer flex justify-center items-center overflow-clip hover:bg-gray-200/40 transition-all duration-300"
+      >
+        <input
+          id="uploadFileInput"
+          type="file"
+          accept=".pdf"
+          onChange={(e) => handleUpload(e)}
+          className="hidden"
+        />
 
-          <GoPlus className="size-[120%]" />
-        </label>
-      )}
+        <GoPlus className="size-[110%]" />
+      </label>
     </div>
   );
 }

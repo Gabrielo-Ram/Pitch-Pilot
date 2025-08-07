@@ -37,7 +37,7 @@ function Navbar({ showToolTip, toolTipText }: NavBarProps) {
       )}
       <div
         onClick={() => navigate("/")}
-        className="h-[80%] p-1 outline-2 rounded-xl hover:rounded-none hover:bg-blue-600 hover:cursor-pointer transition-all duration-200"
+        className="h-[80%] p-1 outline-2 rounded-xl hover:rounded-lg hover:bg-gray-500 hover:cursor-pointer transition-all duration-200"
       >
         <FaHome className="size-full" />
       </div>

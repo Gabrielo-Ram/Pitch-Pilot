@@ -70,8 +70,11 @@ router.post("/", async (req: any, res: any) => {
         .json({ error: "❌ Failed to send parsed PDF to MCP " });
     }
 
+    const response = await sendToMCP.json();
+
     return res.json({
-      message: "Successfully parsed and sent PDF file to MCP",
+      role: "model",
+      reply: response.reply,
     });
   } catch (error) {
     console.error("❌ Error processing PDF to LLM: ", error);

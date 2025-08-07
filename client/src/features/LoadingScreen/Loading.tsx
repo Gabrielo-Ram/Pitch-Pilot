@@ -1,3 +1,5 @@
+import SpinningGear from "./SpinningGear";
+
 type LoadingProps = {
   className?: string;
 };
@@ -15,6 +17,7 @@ type LoadingProps = {
 function Loading({ className }: LoadingProps) {
   return (
     <div className="flex flex-col justify-center items-center">
+      <SpinningGear className="w-[13%]" />
       <div
         className={`flex justify-center items-end font-semibold text-white ${className}`}
       >

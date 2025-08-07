@@ -64,8 +64,7 @@ If there are multiple companies, ask:
 
 Use a warm and professional tone. Be encouraging, but direct.
 
-Below is the raw text extracted from their pitch deck. Use it to generate your feedback:
-
+Please prompt the user to upload a PDF file of their pitch deck or the compilation of pitch decks at their disposal. 
     `;
 
 export default systemPrompt;

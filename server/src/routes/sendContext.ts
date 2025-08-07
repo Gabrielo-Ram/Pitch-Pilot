@@ -2,8 +2,7 @@
  * 'sendContext.ts'
  *
  * An Express router mounted at the '/mcp/sendContext' endpoint.
- * Handles sending the system prompt along with the user's context
- * to the MCP
+ * Sends the MCP Server the system prompt.
  */
 import express from "express";
 import { Request, Response } from "express";
@@ -24,22 +23,6 @@ router.post("/", async (req: Request, res: Response) => {
       });
       return;
     }
-
-    // //Retrieve the context from the request body
-    // const userContext = req.body.context;
-
-    // //TESTING:
-    // //console.error(`req.body in 'sendContext':\n${userContext}`);
-
-    // if (!userContext || typeof userContext !== "string") {
-    //   res.status(400).json({
-    //     error: "Missing or invalid 'userContext'. Request must be a string. ",
-    //   });
-    //   return;
-    // }
-
-    // //Build the starting system prompt
-    // const startingPrompt = `${systemPrompt} \n ${userContext}`;
 
     //Send the prompt to Gemini and save its response
     const reply = await client.processQuery(systemPrompt);

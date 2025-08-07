@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import UploadContext from "../features/UploadContext/UploadContext";
 import DisplayMessages from "../features/ChatWindow/DisplayMessages";
 import SubmitMessage from "../features/ChatWindow/SubmitMessage";
 import Navbar from "../components/Navbar";
@@ -12,7 +11,6 @@ if (!BACKEND_URL) {
 }
 
 function ChatPage() {
-  const [isUploaded, setIsUploaded] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [fatalError, setfatalError] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -25,7 +23,9 @@ function ChatPage() {
   - · **Create a one-pager for each company in your presentation batch (if you uploaded a compilation of multiple startup decks)**`;
 
   //Navigate to 'Error' page if we ever encounter a fatal error
-  if (fatalError) navigate("/error");
+  useEffect(() => {
+    if (fatalError) navigate("/error");
+  }, [fatalError]);
 
   //Send system prompt to Gemini upon first render
   useEffect(() => {
@@ -33,9 +33,26 @@ function ChatPage() {
       try {
         const res = await fetch(`${BACKEND_URL}/mcp/sendContext`, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
 
         if (!res.ok) setfatalError(true);
+
+        const data = await res.json();
+
+        //Renders Gemini's response in the frontend
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            role: "model",
+            reply: data.message,
+          },
+        ]);
+
+        //TESTING:
+        console.log("Rendered Gemini's message: \n", data.reply);
       } catch (error) {
         console.error(`❌ Failed to send system prompt to MCP: \n${error}`);
         setfatalError(true);
@@ -45,43 +62,8 @@ function ChatPage() {
     sendSystemPrompt();
   }, []);
 
-  //Once the user uploads a PDF file, queue Gemini to start chatting with the user
-  useEffect(() => {
-    if (isUploaded) {
-      //Async function wrapper to allow for 'await'
-      const queueGemini = async () => {
-        try {
-          const res = await fetch(`${BACKEND_URL}/mcp/processQuery`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              message: "Please review the pitch deck I provided",
-            }),
-          });
-
-          if (!res.ok) setfatalError(true);
-
-          //Sets the frontend 'messages' array to Gemini's response.
-          const data = await res.json();
-
-          setMessages([data]);
-
-          console.log("✓ Successfully queued Gemini");
-        } catch (error) {
-          console.error(
-            "❌ Failed to queue Gemini to communicate with the user"
-          );
-          setfatalError(true);
-        }
-      };
-
-      queueGemini();
-    }
-  }, [isUploaded]);
-
   return (
     <div className="h-screen w-screen overflow-hidden flex flex-col place-items-center bg-gray-800 text-xl">
-      {!isUploaded && <UploadContext setIsUploaded={setIsUploaded} />}
       <Navbar showToolTip={true} toolTipText={toolTipText} />
       <DisplayMessages messages={messages} />
       <SubmitMessage setMessages={setMessages} setFatalError={setfatalError} />

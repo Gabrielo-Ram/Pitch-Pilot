@@ -29,7 +29,7 @@ function DisplayMessages({ messages }: ChatWindowProps) {
     <div
       id="chatWindow"
       ref={chatRef}
-      className="chatWindow md:h-[69%] h-[74%] w-screen px-[5%] md:px-[21%] mt-[2%] md:mt-[4.5%] flex flex-col overflow-y-scroll"
+      className="chatWindow md:h-[71%] h-[74%] w-screen px-[5%] md:px-[21%] mt-[2%] md:mt-[4.5%] flex flex-col overflow-y-scroll md:pt-[3%]"
     >
       {messages.map((message, index) => {
         return <RenderMessage key={index} message={message} />;

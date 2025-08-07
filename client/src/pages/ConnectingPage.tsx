@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Loading from "../components/Loading";
+import Loading from "../features/LoadingScreen/Loading";
 import { TfiFaceSad } from "react-icons/tfi";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,11 @@ import { useNavigate } from "react-router-dom";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 if (!BACKEND_URL) {
   throw new Error("❌ Could not load backend URL from environment");
+}
+
+//A helper 'stalling' function
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
@@ -18,7 +23,7 @@ if (!BACKEND_URL) {
  * @component
  */
 function ConnectingPage() {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -35,10 +40,10 @@ function ConnectingPage() {
 
   //Call API endpoint to initiate the MCP Ecosystem
   useEffect(() => {
-    setIsLoading(true);
-
     //Calls the backend API endpoint
     const startServer = async () => {
+      await delay(4000);
+
       try {
         const res = await fetch(`${BACKEND_URL}/mcp`, {
           method: "POST",

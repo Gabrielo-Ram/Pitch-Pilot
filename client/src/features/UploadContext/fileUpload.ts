@@ -42,8 +42,10 @@ export async function uploadFile(
       return false;
     }
 
+    const data = await res.json();
+
     console.log("✓ Successfully uploaded PDF file.");
-    return true;
+    return data.reply;
   } catch (error) {
     console.error("❌ File upload failed:\n", error);
     return false;
