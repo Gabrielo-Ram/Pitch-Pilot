@@ -105,17 +105,12 @@ server.tool(
 //'save-presentation' tool
 server.tool(
   "save-presentation",
-  "Saves the presentation by writing a .pptx file. The input for this tool should be the same input you sent into the 'create-presentation' tool. ",
-  {
-    fileName: z
-      .string()
-      .describe(
-        "The name of the saved file. This file should only be shortFormDeck.pptx, or onePagers.pptx."
-      ),
-  },
-  async ({ fileName }) => {
+  "Saves the presentation by writing a .pptx file",
+  {},
+  async () => {
     try {
-      await savePresentation(fileName);
+      await savePresentation("PitchPilotDeck.pptx");
+
       return {
         content: [
           {
@@ -123,6 +118,9 @@ server.tool(
             text: "Successfully saved the presentation",
           },
         ],
+        data: {
+          downloadURL: "/downloads/PitchPilotDeck.pptx",
+        },
       };
     } catch (error) {
       return {

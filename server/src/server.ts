@@ -107,6 +107,9 @@ mcpRouter.post("/", async (req, res, next) => {
   }
 });
 
+//A route that serves .pptx files in the outputs folder
+app.use("/downloads", express.static(path.resolve("output")));
+
 //Starts the Express Server
 app.listen(port, () => {
   console.error(`\n✓ Server started at port: ${port}`);

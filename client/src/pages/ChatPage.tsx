@@ -13,6 +13,7 @@ if (!BACKEND_URL) {
 function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [fatalError, setfatalError] = useState<boolean>(false);
+  const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
   const navigate = useNavigate();
 
   //Content that guides the user on how to use this page.
@@ -58,6 +59,34 @@ function ChatPage() {
 
     sendSystemPrompt();
   }, []);
+
+  //Scan for a new file, once found, automatically download it.
+  useEffect(() => {
+    const scanForNewFile = async () => {
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+        //Check if the file exists
+        const res = await fetch(
+          `${BACKEND_URL}/downloads/PitchPilotDeck.pptx`,
+          {
+            method: "HEAD",
+          }
+        );
+
+        if (res.ok) {
+          const a = document.createElement("a");
+          a.href = `${BACKEND_URL}/downloads/PitchPilotDeck.pptx`;
+          a.download = "PitchPilotDeck.pptx";
+          a.click();
+        }
+      } catch (error) {
+        console.error("Error checking for .pptx file: \n", error);
+      }
+    };
+
+    if (!isDownloaded) scanForNewFile();
+  });
 
   return (
     <div className="h-screen w-screen overflow-hidden flex flex-col place-items-center bg-gray-800 text-xl">
