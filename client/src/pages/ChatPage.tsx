@@ -13,7 +13,7 @@ if (!BACKEND_URL) {
 function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [fatalError, setfatalError] = useState<boolean>(false);
-  const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
+  //const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
   const navigate = useNavigate();
 
   //Content that guides the user on how to use this page.
@@ -85,7 +85,7 @@ function ChatPage() {
       }
     };
 
-    if (!isDownloaded) scanForNewFile();
+    scanForNewFile();
   });
 
   return (

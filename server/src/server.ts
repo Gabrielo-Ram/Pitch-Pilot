@@ -85,7 +85,7 @@ mcpRouter.post("/", async (req, res, next) => {
     //Mount routes to endpoints
     mcpRouter.use(
       "/processPDF",
-      express.raw({ type: "application/pdf", limit: "50mb" }),
+      express.raw({ type: "application/pdf", limit: "200mb" }),
       processPDFRouter
     );
 

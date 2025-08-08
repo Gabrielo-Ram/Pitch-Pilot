@@ -1,5 +1,6 @@
 import { GoPlus } from "react-icons/go";
 import { uploadFile } from "./fileUpload";
+import { useRef } from "react";
 
 type UploadContextProps = {
   className?: string;
@@ -23,8 +24,10 @@ function UploadContext({
   setIsLoading,
   setMessages,
 }: UploadContextProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   //Sends the state up to the parent element when file is successfully uploaded
-  const handleUpload = async (e: any) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsLoading(true);
     const response = await uploadFile(e);
 
@@ -40,6 +43,11 @@ function UploadContext({
       },
     ]);
     setIsLoading(false);
+
+    //Clear the input field
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
   };
 
   return (
@@ -54,6 +62,7 @@ function UploadContext({
           accept=".pdf"
           onChange={(e) => handleUpload(e)}
           className="hidden"
+          ref={inputRef}
         />
 
         <GoPlus className="size-[110%]" />

@@ -14,12 +14,12 @@
  * This presentation is meant to be presented in under 2 minutes.
  */
 
-import { presentation } from "./createAndSavePresentation.js";
-import { logoImage, backgroundImage, chartImage } from "./assets/imageLinks.js";
 import {
   createPresentation,
-  savePresentation,
+  presentation,
 } from "./createAndSavePresentation.js";
+import { logoImage, backgroundImage, chartImage } from "./assets/imageLinks.js";
+import { savePresentation } from "./createAndSavePresentation.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { ShortFormDeckData } from "./types.js";
@@ -343,12 +343,14 @@ function addAsk(content: string[]): void {
 }
 
 /**
- * TESTING:
+ * Initiates the creation of a 'short-form pitch deck'. Creates
+ * and styles a 7 slide presentation for a specific company
+ * based on input 'data'.
+ *
+ * @param {ShortFormDeckData} data - Relevant data for a specific company
  */
 export async function addSlides(data: ShortFormDeckData) {
   await createPresentation();
-
-  const success = doesPresentationExist();
 
   //Extracts inputs from 'data'
   const { companyName, tagline } = data.coverSlideProps;
@@ -361,23 +363,17 @@ export async function addSlides(data: ShortFormDeckData) {
     askSlideProps,
   } = data;
 
-  if (success) {
-    //Add each individual slide
-    addCoverSlide(companyName, tagline);
-    //addIntro(introSlideProps);
-    addProblem(problemSlideProps);
-    addSolution(solutionSlideProps);
-    addMarket(marketSlideProps);
-    addTraction(tractionSlideProps);
-    addAsk(askSlideProps);
+  //Add each individual slide
+  addCoverSlide(companyName, tagline);
+  //addIntro(introSlideProps);
+  addProblem(problemSlideProps);
+  addSolution(solutionSlideProps);
+  addMarket(marketSlideProps);
+  addTraction(tractionSlideProps);
+  addAsk(askSlideProps);
 
-    //Saves the presentation
-    await savePresentation();
-  } else {
-    console.error(
-      "❌ shortFormDeck.ts: 'presentation' global variabel is empty or null"
-    );
-  }
+  //Saves the presentation
+  await savePresentation();
 }
 
 // addSlides().catch((error) => {

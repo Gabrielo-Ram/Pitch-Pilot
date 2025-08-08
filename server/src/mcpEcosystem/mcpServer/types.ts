@@ -16,3 +16,12 @@ export type ShortFormDeckData = {
   tractionSlideProps: string[];
   askSlideProps: string[];
 };
+
+type OnePagerData = {
+  companyName: string;
+  content: string;
+};
+
+export type OnePagerDeckData = {
+  companies: OnePagerData[];
+};

@@ -15,8 +15,12 @@ import {
   savePresentation,
 } from "./createAndSavePresentation.js";
 import { addSlides } from "./shortFormDeck.js";
-import { addShortFormDeckToolDescription } from "../prompts.js";
-import { ShortFormDeckData } from "./types.js";
+import { makeOnePagerDeck } from "./onePagerDeck.js";
+import {
+  addShortFormDeckToolDescription,
+  addOnePagerDeckToolDescription,
+} from "../prompts.js";
+import { ShortFormDeckData, OnePagerDeckData } from "./types.js";
 
 // Create server instance
 const server = new McpServer({
@@ -28,115 +32,77 @@ const server = new McpServer({
   },
 });
 
-/**
- * [ SAMPLE ]
- * This is an example of how to register a server tool in this MCP Server.
- * Before we registers any server tools, we need to write the pptxGenjs logic.
- */
-server.tool(
-  "set-access-token",
-  "This tool stores the user's access Token for future use",
-  {
-    accessToken: z
-      .string()
-      .describe("The user's access Token for Google oAuth"),
-  },
-  async ({ accessToken }) => {
-    if (!accessToken || accessToken.length < 1) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: "Access Token is empty or invalid. Please pass in a valid access Token",
-          },
-        ],
-      };
-    }
+// //`create-presentation` tool
+// server.tool(
+//   "create-presentation",
+//   "Creates a new presentation for either a one-pager or a short-form deck. You must call this tool before attempting to add slides.",
+//   {
+//     fileName: z
+//       .string()
+//       .describe(
+//         "The name of the file to be generated. This file should only be shortFormDeck.pptx, or onePagers.pptx"
+//       ),
+//   },
+//   async ({ fileName }) => {
+//     try {
+//       await createPresentation(fileName);
 
-    //storeAccessToken(accessToken);
+//       return {
+//         content: [
+//           {
+//             type: "text",
+//             text: "Successfully instantiated a new presentation.",
+//           },
+//         ],
+//       };
+//     } catch (error) {
+//       return {
+//         content: [
+//           {
+//             type: "text",
+//             text: `Failed to instantiate a new presentation: \n ${error}`,
+//           },
+//         ],
+//       };
+//     }
+//   }
+// );
 
-    return {
-      content: [
-        {
-          type: "text",
-          text: "Succesfully retrieved the user's access Token",
-        },
-      ],
-    };
-  }
-);
+// //'save-presentation' tool
+// server.tool(
+//   "save-presentation",
+//   "Saves the presentation by writing a .pptx file",
+//   {},
+//   async () => {
+//     try {
+//       await savePresentation("PitchPilotDeck.pptx");
 
-//`create-presentation` tool
-server.tool(
-  "create-presentation",
-  "Creates a new presentation for either a one-pager or a short-form deck. You must call this tool before attempting to add slides.",
-  {
-    fileName: z
-      .string()
-      .describe(
-        "The name of the file to be generated. This file should only be shortFormDeck.pptx, or onePagers.pptx"
-      ),
-  },
-  async ({ fileName }) => {
-    try {
-      await createPresentation(fileName);
-
-      return {
-        content: [
-          {
-            type: "text",
-            text: "Successfully instantiated a new presentation.",
-          },
-        ],
-      };
-    } catch (error) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Failed to instantiate a new presentation: \n ${error}`,
-          },
-        ],
-      };
-    }
-  }
-);
-
-//'save-presentation' tool
-server.tool(
-  "save-presentation",
-  "Saves the presentation by writing a .pptx file",
-  {},
-  async () => {
-    try {
-      await savePresentation("PitchPilotDeck.pptx");
-
-      return {
-        content: [
-          {
-            type: "text",
-            text: "Successfully saved the presentation",
-          },
-        ],
-        data: {
-          downloadURL: "/downloads/PitchPilotDeck.pptx",
-        },
-      };
-    } catch (error) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Failed to save presentation: \n ${error}`,
-          },
-        ],
-      };
-    }
-  }
-);
+//       return {
+//         content: [
+//           {
+//             type: "text",
+//             text: "Successfully saved the presentation",
+//           },
+//         ],
+//         data: {
+//           downloadURL: "/downloads/PitchPilotDeck.pptx",
+//         },
+//       };
+//     } catch (error) {
+//       return {
+//         content: [
+//           {
+//             type: "text",
+//             text: `Failed to save presentation: \n ${error}`,
+//           },
+//         ],
+//       };
+//     }
+//   }
+// );
 
 server.tool(
-  "add-short-form-deck",
+  "create-short-form-deck",
   addShortFormDeckToolDescription,
   {
     coverSlideProps: z.object({
@@ -221,7 +187,48 @@ server.tool(
         content: [
           {
             type: "text",
-            text: `Failed to add slides for a short-form pitch deck: \n ${error}`,
+            text: "Failed to create short-form pitch deck.",
+          },
+        ],
+      };
+    }
+  }
+);
+
+//create-one-pager tool
+server.tool(
+  "create-one-pager-deck",
+  addOnePagerDeckToolDescription,
+  {
+    companies: z
+      .array(
+        z.object({
+          companyName: z.string().describe("The name of the company"),
+          content: z.string().describe("The one-pager paragraph content"),
+        })
+      )
+      .describe(
+        "An array of objects where each element contains one-pager content for an individual startup company."
+      ),
+  },
+  async ({ companies }) => {
+    try {
+      await makeOnePagerDeck({ companies });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: "Successfully created a one-pager deck.",
+          },
+        ],
+      };
+    } catch (error) {
+      return {
+        content: [
+          {
+            type: "text",
+            text: "Failed to create one-pager deck.",
           },
         ],
       };

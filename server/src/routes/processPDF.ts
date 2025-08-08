@@ -77,9 +77,12 @@ router.post("/", async (req: any, res: any) => {
       reply: response.reply,
     });
   } catch (error) {
-    console.error("❌ Error processing PDF to LLM: ", error);
+    console.error(
+      "❌ Error processing PDF to LLM. File may be too large: ",
+      error
+    );
     res.status(500).json({
-      error: "Failed to process PDF",
+      error: "Failed to process PDF. File may be too large",
     });
   }
 });
