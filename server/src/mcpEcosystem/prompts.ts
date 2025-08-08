@@ -3,12 +3,11 @@
  *
  * This file contains relevant AI prompts and MCP Server tool descriptions.
  * Tools I am going to register:
- *  - Give feedback in plain text
  *  - Generate short-form pitch deck
- *  - Create a one-pager
+ *  - Create one-pagers for a compilation of pitch decks
  */
 
-const systemPrompt = `You are a startup pitch deck advisor analyzing a PDF presentation that contains one or more early-stage company pitch decks. The user has uploaded this presentation either as a founder submitting their own company’s deck, or as an analyst sharing a compilation of multiple startup decks.
+export const systemPrompt = `You are a startup pitch deck advisor analyzing a PDF presentation that contains one or more early-stage company pitch decks. The user has uploaded this presentation either as a founder submitting their own company’s deck, or as an analyst sharing a compilation of multiple startup decks.
 
 Your job is to extract meaning from the raw slide text and provide valuable insight into each pitch. Treat every included pitch deck as if it were submitted for investor review. Your goals are to identify key metrics, understand the value proposition, and offer feedback to improve clarity, storytelling, and persuasiveness.
 
@@ -67,4 +66,27 @@ Use a warm and professional tone. Be encouraging, but direct.
 Please prompt the user to upload a PDF file of their pitch deck or the compilation of pitch decks at their disposal. 
     `;
 
-export default systemPrompt;
+export const addShortFormDeckToolDescription = `Generates slides for a short-form version of a startup's pitch deck, suitable for 2-3 minute presentations or quick investor previews.
+
+This tool adds 7 slides where each slide covers a key aspect of a pitch deck. The input you pass into this tool will reflect this format. The input you pass into this tool MUST fit the following type-interface:
+
+type ShortFormDeckData = {
+  coverSlideProps: {
+    companyName: string;
+    tagline: string;
+  };
+  introSlideProps: string;
+  problemSlideProps: string[];
+  solutionSlideProps: string[];
+  marketSlideProps: string[];
+  tractionSlideProps: string[];
+  askSlideProps: string[];
+}
+  
+Each property in the input corresponds to the content for a specific slide in the short-form pitch deck.
+
+For slide properties that accept a string, the text will appear as a single block on that slide (e.g., the intro slide).
+
+For slide properties that accept a string array, you must provide 3 to 4 concise sentences, with each sentence as a separate string in the array. These sentences will be styled as bullet points in the generated slide.
+
+This structure ensures consistent formatting across slides and allows for clear, bullet-point summaries where appropriate.`;

@@ -194,7 +194,6 @@ export class MCPClient {
 }
 
 /**
- * TODO: Make sure the filepath to the MCP Server is correct
  *
  * The Main function that starts the MCP Client and connects it to
  * the MCP Server.
@@ -206,7 +205,7 @@ export async function engageMCPEcosystem() {
   const mcpServerPath = path.resolve(
     __dirname,
     "../../../build/mcpEcosystem/mcpServer/index.js"
-  ); //TODO: Aliases in Vite? '@/[Path to index]' this haappens in Nextjs.
+  ); //TODO: Aliases in Vite? '@/[Path to index]' this happens in Nextjs.
 
   //Initiate the MCP Clients
   const mcpClient = new MCPClient();
@@ -220,12 +219,11 @@ export async function engageMCPEcosystem() {
     //Returns an instance of the MCP Client
     return mcpClient;
   } catch (error) {
+    await mcpClient.cleanup();
     throw new Error(
       `Fatal error when engaging MCP Ecosystem in 'mcpClient.js': \n${error}`
     );
   }
-
-  await mcpClient.cleanup();
   process.exit(0);
 }
 

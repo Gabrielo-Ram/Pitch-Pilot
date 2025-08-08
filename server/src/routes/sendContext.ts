@@ -7,7 +7,7 @@
 import express from "express";
 import { Request, Response } from "express";
 import { mcpClient } from "../server.js";
-import systemPrompt from "../mcpEcosystem/prompts.js";
+import { systemPrompt } from "../mcpEcosystem/prompts.js";
 
 //MCP Client instance
 const client = mcpClient || null;

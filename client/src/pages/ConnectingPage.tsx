@@ -42,12 +42,12 @@ function ConnectingPage() {
   useEffect(() => {
     //Calls the backend API endpoint
     const startServer = async () => {
-      await delay(4000);
-
       try {
         const res = await fetch(`${BACKEND_URL}/mcp`, {
           method: "POST",
         });
+
+        await delay(4000);
 
         await res.json();
 

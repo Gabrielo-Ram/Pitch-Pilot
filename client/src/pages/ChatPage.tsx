@@ -50,9 +50,6 @@ function ChatPage() {
             reply: data.message,
           },
         ]);
-
-        //TESTING:
-        console.log("Rendered Gemini's message: \n", data.reply);
       } catch (error) {
         console.error(`❌ Failed to send system prompt to MCP: \n${error}`);
         setfatalError(true);
