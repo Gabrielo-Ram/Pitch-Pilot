@@ -11,12 +11,14 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import {
   engageMCPEcosystem,
   MCPClient,
 } from "./mcpEcosystem/mcpClient/index.js";
+import deletePresentationsRouter from "./routes/deletePresentations.js";
 
 //Dotenv configuration. Doesn't read '.env' if in production
 const __filename = fileURLToPath(import.meta.url);
@@ -47,6 +49,36 @@ app.use(express.json());
 
 //A reference to our MCP Client
 export let mcpClient: MCPClient | null = null;
+
+//Defines an absolute path to the 'output' directory
+const OUTPUT_DIR = path.resolve(__dirname, "../output");
+
+//Scans the output folder for a 'PitchPilotDeck.pptx' file
+app.head("/downloads/:filename", async (req, res) => {
+  const filePath = path.join(OUTPUT_DIR, path.basename(req.params.filename));
+
+  fs.access(filePath, (error) => {
+    if (error) return res.sendStatus(404);
+    return res.sendStatus(200);
+  });
+});
+
+app.get("/downloads/:filename", (req, res) => {
+  const filePath = path.join(OUTPUT_DIR, path.basename(req.params.filename));
+
+  //Don't save this file in the cache
+  res.set("Cache-Control", "no-store");
+
+  res.download(filePath, async (error) => {
+    if (error) {
+      if (!res.headersSent) return res.sendStatus(500);
+    }
+
+    fs.unlink(filePath, (error) => {
+      if (error) console.error(`Failed to unlink ${filePath}: \n ${error}`);
+    });
+  });
+});
 
 /**
  * Starts the MCP Ecosystem
@@ -93,7 +125,6 @@ mcpRouter.post("/", async (req, res, next) => {
 
     mcpRouter.use("/sendContext", sendContextRouter);
 
-    console.error("✓ Succesfully engaged MCP Ecosystem");
     isMCPInitalizing = false;
 
     return res
@@ -106,9 +137,6 @@ mcpRouter.post("/", async (req, res, next) => {
       .json({ error: "Failed to initialize MCP ecosystem." });
   }
 });
-
-//A route that serves .pptx files in the outputs folder
-app.use("/downloads", express.static(path.resolve("output")));
 
 //Starts the Express Server
 app.listen(port, () => {

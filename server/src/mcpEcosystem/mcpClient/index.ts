@@ -2,7 +2,14 @@
  * [ mcpClient Entry File ]
  * 'mcpClient.ts'
  */
-import { GoogleGenAI, Content, mcpToTool, CallableTool } from "@google/genai";
+import {
+  GoogleGenAI,
+  Content,
+  mcpToTool,
+  CallableTool,
+  Mode,
+  FunctionCallingConfigMode,
+} from "@google/genai";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
 import dotenv from "dotenv";
@@ -95,21 +102,30 @@ export class MCPClient {
         contents: this.messages,
         config: {
           tools: this.tools,
+          toolConfig: {
+            functionCallingConfig: {
+              mode: FunctionCallingConfigMode.AUTO,
+            },
+          },
         },
       });
 
-      //Silences a Gemini SDK warning
-      const { text } = response;
-      //Saves Gemini's response to the query in a buffer
-      const reply = text ?? "";
+      //Saves Gemini's text response to the query in a buffer
+      const reply = response.text;
 
-      //Validate the model's response
+      //TESTING: If the LLM returns a 'GenerateContentResponse' object that has an empty text field, print out the full result.
       if (typeof reply !== "string" || reply.trim() == "") {
         console.error(
-          `\nSorry, the LLM returned an empty or invalid reply. Please try again.\n`
+          `\nNo string response detected, returning full LLM response for debugging purposes:\n${JSON.stringify(
+            response,
+            null,
+            2
+          )} \n`
         );
+
         //If LLM response invalid, remove user query that caused error from message history and return.
-        this.messages.pop();
+        //this.messages.pop();
+
         return;
       }
 

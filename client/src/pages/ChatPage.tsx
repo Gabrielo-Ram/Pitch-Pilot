@@ -64,24 +64,26 @@ function ChatPage() {
   useEffect(() => {
     const scanForNewFile = async () => {
       try {
+        //Stalls for 2 seconds
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        //Check if the file exists
-        const res = await fetch(
+        const scan = await fetch(
           `${BACKEND_URL}/downloads/PitchPilotDeck.pptx`,
           {
             method: "HEAD",
           }
         );
 
-        if (res.ok) {
+        if (scan.ok) {
+          //Download the presentation
           const a = document.createElement("a");
           a.href = `${BACKEND_URL}/downloads/PitchPilotDeck.pptx`;
           a.download = "PitchPilotDeck.pptx";
           a.click();
+          a.remove();
         }
       } catch (error) {
-        console.error("Error checking for .pptx file: \n", error);
+        console.error("❌ Error checking for .pptx file: \n", error);
       }
     };
 

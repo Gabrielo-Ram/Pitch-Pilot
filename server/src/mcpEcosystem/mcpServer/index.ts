@@ -172,7 +172,7 @@ server.tool(
       };
 
       //Adds one-pager slides
-      addSlides(data);
+      await addSlides(data);
 
       return {
         content: [

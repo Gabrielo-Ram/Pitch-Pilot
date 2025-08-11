@@ -53,11 +53,14 @@ function RenderMessage({ message }: RenderMessagesProps) {
                 {...props}
               />
             ),
-            code: ({ node, ...props }) => (
-              <code
-                className="max-w-[80%] overflow-x-auto! border-1"
+            pre: ({ node, ...props }) => (
+              <pre
+                className="overflow-x-auto bg-gray-900 p-5 rounded-xl text-sm"
                 {...props}
               />
+            ),
+            code: ({ node, ...props }) => (
+              <code className="overflow-x-auto" {...props} />
             ),
           }}
         >

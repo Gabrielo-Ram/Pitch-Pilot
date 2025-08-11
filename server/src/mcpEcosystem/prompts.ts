@@ -76,19 +76,14 @@ Prompt them to upload a PDF file of their pitch deck (single) or compilation (mu
 
 export const addShortFormDeckToolDescription = `Generates slides for a short-form version of a startup's pitch deck, suitable for 2-3 minute presentations or quick investor previews.
 
-This tool adds 7 slides where each slide covers a key aspect of a pitch deck. The input you pass into this tool will reflect this format. The input you pass into this tool MUST fit the following type-interface:
+This tool adds 7 slides where each slide covers a key aspect of a pitch deck. The input you pass into this tool will reflect this format. The input you pass into this tool MUST fit the following format
 
-type ShortFormDeckData = {
-  coverSlideProps: {
-    companyName: string;
-    tagline: string;
-  };
-  introSlideProps: string;
-  problemSlideProps: string[];
-  solutionSlideProps: string[];
-  marketSlideProps: string[];
-  tractionSlideProps: string[];
-  askSlideProps: string[];
+Args example:
+{
+  "coverSlideProps": { "companyName": "Acme", tagline: "AI for X" },
+  "introSlideProps": "Three-sentence intro...",
+  ...
+  ...
 }
   
 Each property in the input corresponds to the content for a specific slide in the short-form pitch deck.
@@ -100,6 +95,13 @@ For slide properties that accept a string array, you must provide 3 to 4 concise
 This structure ensures consistent formatting across slides and allows for clear, bullet-point summaries where appropriate.`;
 
 export const addOnePagerDeckToolDescription = `You are an expert startup analyst and pitch deck writer. If the PDF file the user uploads is a compilation of multiple companie's pitch decks, use this tool to create a presentation of one-pagers for each company.
+
+Args example:
+{
+  companies: [
+    { "companyName": "Acme AI", "content": "Acme builds..." }
+  ]
+}
 
 For each companie's one-pager, write a short, compelling body paragraph (2-3 sentences max) that summarizes a startup company for early-stage investors. Your writing will appear in the body of a one-pager slide—so keep it tight, powerful, and easy to skim.
 

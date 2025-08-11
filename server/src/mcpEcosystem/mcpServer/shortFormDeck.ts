@@ -160,7 +160,7 @@ function addProblem(content: string[]): void {
       {
         fontSize: 20,
         x: "5%",
-        y: "18%",
+        y: "22%",
         w: "85%",
         h: "50%",
       }
@@ -196,7 +196,7 @@ function addSolution(content: string[]): void {
       {
         fontSize: 20,
         x: "5%",
-        y: "18%",
+        y: "22%",
         w: "85%",
         h: "50%",
       }
@@ -282,7 +282,7 @@ function addTraction(content: string[]): void {
       {
         fontSize: 20,
         x: "5%",
-        y: "28%",
+        y: "32%",
         w: "60%",
         h: "50%",
       }
@@ -335,7 +335,7 @@ function addAsk(content: string[]): void {
       {
         fontSize: 20,
         x: "5%",
-        y: "18%",
+        y: "22%",
         w: "85%",
         h: "50%",
       }
@@ -364,13 +364,13 @@ export async function addSlides(data: ShortFormDeckData) {
   } = data;
 
   //Add each individual slide
-  addCoverSlide(companyName, tagline);
+  await addCoverSlide(companyName, tagline);
   //addIntro(introSlideProps);
-  addProblem(problemSlideProps);
-  addSolution(solutionSlideProps);
-  addMarket(marketSlideProps);
-  addTraction(tractionSlideProps);
-  addAsk(askSlideProps);
+  await addProblem(problemSlideProps);
+  await addSolution(solutionSlideProps);
+  await addMarket(marketSlideProps);
+  await addTraction(tractionSlideProps);
+  await addAsk(askSlideProps);
 
   //Saves the presentation
   await savePresentation();
