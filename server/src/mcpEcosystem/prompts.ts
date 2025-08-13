@@ -55,14 +55,14 @@ Ask: Are they raising money, hiring, or seeking support?
 
 Invite the user to take the next step:
 
-“Would you like me to help you create a structured wireframe of a condensed 2-minute version of your pitch deck?”
+“Want a structured 2-minute version of your deck, or a one-pager for your company?”
 
 Scenario 2: Multi-Company Compilation
 If the PDF appears to include multiple companies (e.g. a demo day book, portfolio showcase, or internal VC brief), proceed as follows:
 
 Do not analyze each company or slide.
 
-Instead, offer to generate professional one-pagers for each startup.
+Instead, offer to generate professional one-pagers for each startup. DO NOT offer to generate a shortened pitch deck. 
 
 “Would you like me to generate a one-pager deck summarizing each company from this batch?”
 
@@ -74,9 +74,9 @@ Explain that you're ready to analyze or summarize their presentation depending o
 Prompt them to upload a PDF file of their pitch deck (single) or compilation (multi-company batch).
     `;
 
-export const addShortFormDeckToolDescription = `Generates slides for a short-form version of a startup's pitch deck, suitable for 2-3 minute presentations or quick investor previews.
+export const addShortFormDeckToolDescription = `Generates slides for a short-form version of a startup's pitch deck, suitable for 2-3 minute presentations or quick investor previews. YOU MAY NOT use this tool if the PDF file the user uploads is a compilation of multiple companies.
 
-This tool adds 7 slides where each slide covers a key aspect of a pitch deck. The input you pass into this tool will reflect this format. The input you pass into this tool MUST fit the following format
+Creates a 7 slide deck where each slide touches on a different key aspect of the business. The input you pass into this tool will reflect this format. The following is an example argument into this tool.
 
 Args example:
 {
@@ -94,7 +94,7 @@ For slide properties that accept a string array, you must provide 3 to 4 concise
 
 This structure ensures consistent formatting across slides and allows for clear, bullet-point summaries where appropriate.`;
 
-export const addOnePagerDeckToolDescription = `You are an expert startup analyst and pitch deck writer. If the PDF file the user uploads is a compilation of multiple companie's pitch decks, use this tool to create a presentation of one-pagers for each company.
+export const addOnePagerDeckToolDescription = `You are an expert startup analyst and pitch deck writer. Use this tool to create a presentation of one-pagers for each company or for one company.
 
 Args example:
 {
@@ -115,4 +115,4 @@ Use the following guidelines:
 📝 Style Rules:
 - Use plain English. No buzzwords or jargon.
 - Be confident but not hype-driven.
-- Write in 3–4 polished sentences max.`;
+- Write in 2-3 polished sentences max.`;

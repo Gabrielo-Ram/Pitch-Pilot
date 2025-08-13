@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DisplayMessages from "../features/ChatWindow/DisplayMessages";
 import SubmitMessage from "../features/ChatWindow/SubmitMessage";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/ChatNavbar";
 import type { Message } from "../types";
 import { useNavigate } from "react-router-dom";
 
@@ -24,9 +24,9 @@ function ChatPage() {
   - · **Create a one-pager for each company in your presentation batch (if you uploaded a compilation of multiple startup decks)**`;
 
   //Navigate to 'Error' page if we ever encounter a fatal error
-  useEffect(() => {
-    if (fatalError) navigate("/error");
-  }, [fatalError]);
+  // useEffect(() => {
+  //   if (fatalError) navigate("/error");
+  // }, [fatalError]);
 
   //Send system prompt to Gemini upon first render
   useEffect(() => {

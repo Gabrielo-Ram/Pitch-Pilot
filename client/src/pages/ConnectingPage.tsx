@@ -47,7 +47,7 @@ function ConnectingPage() {
           method: "POST",
         });
 
-        await delay(4000);
+        await delay(5000);
 
         await res.json();
 
@@ -70,7 +70,7 @@ function ConnectingPage() {
   }, []);
 
   return (
-    <div className="h-screen w-screen overflow-hidden flex justify-center items-center bg-gray-800 text-xl">
+    <div className="h-screen w-screen overflow-hidden flex justify-center items-center bg-dark-grey text-xl">
       {isLoading ? (
         <Loading className="text-5xl" />
       ) : isSuccessful ? (
@@ -91,20 +91,12 @@ function ConnectingPage() {
       ) : (
         <div className="flex flex-col justify-center items-center w-[50%]">
           <TfiFaceSad className="size-[30%] my-[5%]" />
-          <p className="text-center">
+          <p className="text-center text-4xl ">
             <b>Something went very wrong</b>. Please try again in a couple of
-            minutes. If that doesn't work... please send{" "}
-            <a
-              href="https://www.linkedin.com/in/gabriel-ramirez-80550a311/"
-              target="_blank"
-              className="underline"
-            >
-              Gabe Ramirez
-            </a>{" "}
-            a message.
+            minutes.
           </p>
           <div
-            className="outline-1 w-[35%] text-center my-[4%] py-2 px-3 rounded-xl bg-gray-600 hover:cursor-pointer hover:outline-3 hover:bg-blue-900 hover:rounded-lg transition-all duration-200"
+            className="outline-1 w-[35%] text-center my-[4%] py-2 px-3 rounded-xl hover:bg-gray-600 hover:cursor-pointer hover:outline-3 bg-blue-900 hover:rounded-lg transition-all duration-200"
             onClick={navigateHome}
           >
             <p>Navigate home</p>

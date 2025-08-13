@@ -12,6 +12,27 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* --grey: #0d0c31;
+  --blue: #3533cd;
+  --white: #fcfafa;
+  --black: #000000;
+  --light-grey: #8ea4d2; */
+}
+
+@theme {
+  --color-dark-grey: #0d0c31;
+  --color-blue: #3533cd;
+  --color-white: #fcfafa;
+  --color-light-grey: #8ea4d2;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 /* Scrollbar styles */
