@@ -7,6 +7,7 @@ import AIClipart from "../assets/artificial-intelligence.png";
 import ChatWindowClipart from "../assets/Chat Window Clipart.png";
 import PromptGeminiClipart from "../assets/Prompt Clipart.png";
 import FileClipart from "../assets/FileClipart.png";
+import HeroImage from "../assets/Hero image.png";
 //React components
 import Section from "../components/Section";
 import HomeNavbar from "../components/HomeNavbar";
@@ -98,7 +99,7 @@ function Home() {
             instant
           </p>
           <Button
-            className="w-[40%] mx-auto md:mx-0 md:w-[35%] sm:w-[30%] my-[5%]"
+            className="w-[40%] mx-auto md:mx-0 md:w-[35%] sm:w-[30%] my-[5%] "
             onClick={navigateHome}
           >
             Chat with Gemini
@@ -106,16 +107,18 @@ function Home() {
         </div>
         <div
           id="heroImage"
-          className="border-1 border-amber-400 hidden lg:block lg:col-span-2 lg:row-span-2"
-        ></div>
+          className="hidden lg:block lg:col-span-2 lg:row-span-2"
+        >
+          <img src={HeroImage} alt="PitchPilot Hero Image" />
+        </div>
       </Section>
 
       <Section
         id="whyUs?"
-        className="!h-[80%] px-0! py-[10%] bg-gradient-to-b from-blue/30 to-blue/20"
+        className="!h-[80%] px-0! pt-[10%] pb-[7%] bg-gradient-to-b from-blue/30 to-blue/20"
       >
-        <div className="grid grid-cols-7 gap-[5%] bg-gradient-to-r from-light-grey/80 to-blue w-full pl-10 pr-12 2xl:pr-0 py-[7%] text-gray-900">
-          <h1 className="font-bold text-3xl md:text-4xl flex items-center col-span-3 text-center text-dark-grey">
+        <div className="grid grid-cols-7 gap-[2%] bg-gradient-to-r from-light-grey/80 to-blue w-full pl-[2%] py-[7%] px-[2%] text-gray-900">
+          <h1 className="font-bold text-3xl md:text-4xl flex items-center justify-center col-span-3 text-center text-dark-grey">
             You shouldn't waste hours reformatting a deck
           </h1>
           <div className="size-full hidden lg:block">
@@ -125,7 +128,7 @@ function Home() {
               className="size-full"
             />
           </div>
-          <h1 className="font-bold text-2xl md:text-3xl flex items-center col-start-5 col-span-3 text-center text-gray-300">
+          <h1 className="font-bold text-2xl md:text-3xl flex items-center justify-center col-start-5 col-span-3 text-center text-gray-300">
             Let Gemini do the heavy lifting for you
           </h1>
         </div>
@@ -136,7 +139,7 @@ function Home() {
         className="h-[200%]! bg-gradient-to-b from-blue/20 to-blue/30 border-b-1 border-dark-grey"
       >
         <h1 className="text-5xl font-bold text-center">Core Features</h1>
-        <p className="text-2xl font-semibold text-center text-gray-300 pt-5 pb-[7%]">
+        <p className="text-2xl font-semibold text-center text-gray-300 pt-5 pb-[10%]">
           Focused and fast outputs — all in workflow you recognize
         </p>
 
@@ -149,7 +152,7 @@ function Home() {
               <AiFillBulb className="size-full" />
             </div>
             <h1 className="text-3xl font-bold">AI Deck Review</h1>
-            <p className="text-2xl lg:text-xl lg:pt-[8%] pl-2">
+            <p className="text-2xl lg:text-xl xl:text-2xl lg:pt-[8%] pl-2">
               Gemini offers slide-by-slide guidance that sharpens{" "}
               <b>clarity, storytelling, and structure</b> for your pitch deck.
             </p>
@@ -160,7 +163,7 @@ function Home() {
               <FaGear className="size-full" />
             </div>
             <h1 className="text-3xl font-bold">Short-Form Deck</h1>
-            <p className="text-2xl lg:text-xl lg:pt-[8%] pl-2">
+            <p className="text-2xl lg:text-xl xl:text-2xl lg:pt-[8%] pl-2">
               Ask Gemini to condense your deck into a 7-slide template designed
               for demo days and first meetings.
             </p>
@@ -171,7 +174,7 @@ function Home() {
               <RiPagesFill className="size-full" />
             </div>
             <h1 className="text-3xl font-bold">One-Pager</h1>
-            <p className="text-2xl lg:text-xl lg:pt-[8%] pl-2">
+            <p className="text-2xl lg:text-xl xl:text-2xl lg:pt-[8%] pl-2">
               Ask Gemini to generate a one-pager that clearly presents your
               solutions and unique metrics.
             </p>
@@ -193,7 +196,7 @@ function Home() {
 
       <Section
         id="howitworks"
-        className="bg-gradient-to-b h-[200%]! from-blue/20 to-blue/10 pb-[15%] pt-[10%]"
+        className="bg-gradient-to-b h-[200%]! from-blue/20 to-blue/10 pb-[10%] pt-[10%]"
       >
         <h1 className="text-5xl font-bold text-center mb-[5%]">How It Works</h1>
         <div
@@ -211,7 +214,7 @@ function Home() {
                 className="size-[80%]"
               />
             </div>
-            <div className="col-start-1 md:col-start-2 my-auto md:text-xl [&>*]:my-3 p-8">
+            <div className="col-start-1 md:col-start-2 my-auto md:text-xl 2xl:text-2xl  [&>*]:my-3 p-8">
               <p>
                 Chat with Gemini by navigating to the chat window! Gemini has
                 been directed to provide clear, actionable suggestions for a
@@ -250,7 +253,7 @@ function Home() {
                 className=""
               />
             </div>
-            <div className="col-start-1 md:col-start-2 my-auto md:text-xl [&>*]:my-5 p-8">
+            <div className="col-start-1 md:col-start-2 my-auto md:text-xl 2xl:text-3xl [&>*]:my-5 p-8">
               <p>
                 At any point during your chat, prompt Gemini with the following:
               </p>
@@ -276,7 +279,7 @@ function Home() {
                 className="size-[90%]"
               />
             </div>
-            <div className="col-start-1 md:col-start-2 my-auto md:text-xl [&>*]:my-5 p-8">
+            <div className="col-start-1 md:col-start-2 my-auto md:text-xl 2xl:text-3xl [&>*]:my-5 p-8">
               <p>
                 Gemini will take a few moments to generate your deck template.
               </p>

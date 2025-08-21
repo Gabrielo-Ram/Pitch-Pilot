@@ -82,7 +82,7 @@ function SubmitMessage({ setMessages, setFatalError }: SubmitMessageProps) {
           }
         }}
         placeholder="Ask anything"
-        className="submitMessage w-[100%] h-[60%] md:h-[70%] focus:outline-none overflow-y-visible"
+        className="submitMessage w-[100%] h-[60%] md:h-[70%] focus:outline-none overflow-y-visible px-1 py-2 xl:text-2xl"
         disabled={isLoading}
       ></textarea>
       <UserInputToolbar

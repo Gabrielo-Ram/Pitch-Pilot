@@ -80,10 +80,16 @@ Creates a 7 slide deck where each slide touches on a different key aspect of the
 
 Args example:
 {
-  "coverSlideProps": { "companyName": "Acme", tagline: "AI for X" },
+  "coverSlideProps": { 
+    "companyName": "Acme", 
+    tagline: "AI for X" 
+    },
   "introSlideProps": "Three-sentence intro...",
-  ...
-  ...
+  "problemSlideProps": "3-4 sentence string array...",
+  "solutionSlideProps": "3-4 sentence string array...",
+  "marketSlideProps": "3-4 sentence string array...",
+  "tractionSlideProps": "3-4 sentence string array...",
+  "askSlideProps": "3-4 sentence string array..."
 }
   
 Each property in the input corresponds to the content for a specific slide in the short-form pitch deck.
@@ -99,11 +105,16 @@ export const addOnePagerDeckToolDescription = `You are an expert startup analyst
 Args example:
 {
   companies: [
-    { "companyName": "Acme AI", "content": "Acme builds..." }
+    { "companyName": "Acme AI", "content": "Acme builds..." },
+    { "companyName": "Aether Air", "content": "Aether Air builds..."},
   ]
 }
 
-For each companie's one-pager, write a short, compelling body paragraph (2-3 sentences max) that summarizes a startup company for early-stage investors. Your writing will appear in the body of a one-pager slide—so keep it tight, powerful, and easy to skim.
+For each companie's one-pager, write a short, compelling body paragraph (2-3 sentences max) that summarizes a startup company for early-stage investors.
+
+To use this tool, each company should be a new element in the array.
+
+Your writing will appear in the body of a one-pager slide—so keep it tight, powerful, and easy to skim.
 
 Use the following guidelines:
 

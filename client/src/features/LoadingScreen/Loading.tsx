@@ -35,8 +35,7 @@ function Loading({ className }: LoadingProps) {
       <div>
         <p className="text-[80%] my-[2%] max-w-[40%] mx-auto text-center">
           This might take a while. We'll navigate you to the next page once we
-          get everything figured out on our end. We apologize and appreciate
-          your patience.
+          get everything figured out on our end. We appreciate your patience!
         </p>
       </div>
     </div>

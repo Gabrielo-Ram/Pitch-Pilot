@@ -19,7 +19,7 @@ function Footer({ className }: FooterProps) {
           PitchPilot
         </h1>
       </div>
-      <h1>
+      <h1 className="w-[30%] text-2xl">
         Designed by:{" "}
         <a
           className="underline hover:cursor-pointer"

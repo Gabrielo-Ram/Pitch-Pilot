@@ -1,5 +1,5 @@
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 type StepProps = {
   className?: string;

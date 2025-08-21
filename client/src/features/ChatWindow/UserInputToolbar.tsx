@@ -21,7 +21,7 @@ function UserInputToolbar({
   return (
     <div className={`w-full h-[30%] px-1 flex justify-between ${className}`}>
       <UploadContext setIsLoading={setIsLoading} setMessages={setMessages} />
-      <span className="text-sm flex items-end">
+      <span className="text-sm flex items-center ">
         <RiGeminiFill className="mr-2 h-[80%] w-[15%]" />
         Powered by Gemini
       </span>

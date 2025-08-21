@@ -13,7 +13,7 @@ function FatalErrorPage() {
       <TfiFaceSad className="size-[30%] my-[5%]" />
       <p className="text-center">
         <b>Something went very wrong</b>. Please try again in a couple of
-        minutes.
+        minutes. If that doesn't work, send{" "}
         <a
           href="https://www.linkedin.com/in/gabriel-ramirez-80550a311/"
           target="_blank"

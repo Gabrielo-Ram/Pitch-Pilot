@@ -13,7 +13,6 @@ if (!BACKEND_URL) {
 function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [fatalError, setfatalError] = useState<boolean>(false);
-  //const [isDownloaded, setIsDownloaded] = useState<boolean>(false);
   const navigate = useNavigate();
 
   //Content that guides the user on how to use this page.
@@ -24,9 +23,9 @@ function ChatPage() {
   - · **Create a one-pager for each company in your presentation batch (if you uploaded a compilation of multiple startup decks)**`;
 
   //Navigate to 'Error' page if we ever encounter a fatal error
-  // useEffect(() => {
-  //   if (fatalError) navigate("/error");
-  // }, [fatalError]);
+  useEffect(() => {
+    if (fatalError) navigate("/error");
+  }, [fatalError]);
 
   //Send system prompt to Gemini upon first render
   useEffect(() => {
